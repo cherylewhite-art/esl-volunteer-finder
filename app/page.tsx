@@ -208,11 +208,11 @@ function HomeContent() {
       {/* Hero Section */}
       <section className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-16 sm:py-20">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <div className="text-center max-w-5xl mx-auto">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Compare True Costs of ESL Volunteer Programs
             </h2>
-            <p className="text-lg text-gray-600 mb-10">
+            <p className="text-xl text-gray-600 mb-10">
               Free, independent research to help you make informed decisions about
               fee-based ESL volunteer programs. We reveal the hidden costs that
               providers don&apos;t advertise upfront.
@@ -223,10 +223,10 @@ function HomeContent() {
               <div className="flex flex-col md:flex-row gap-6 md:gap-8">
                 {/* Price Range Slider */}
                 <div className="flex-1 text-left">
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  <label className="block text-base font-semibold text-gray-900 mb-2">
                     Price Range
                   </label>
-                  <p className="text-sm font-medium text-blue-600 mb-3">
+                  <p className="text-base font-medium text-blue-600 mb-3">
                     ${priceMin.toLocaleString()} &ndash; ${priceMax.toLocaleString()}
                   </p>
                   <div className="relative h-2 mt-4 mb-2">
@@ -274,7 +274,7 @@ function HomeContent() {
 
                 {/* Duration Checkboxes */}
                 <div className="flex-1 text-left">
-                  <label className="block text-sm font-semibold text-gray-900 mb-3">
+                  <label className="block text-base font-semibold text-gray-900 mb-3">
                     Program Duration
                   </label>
                   <div className="space-y-2">
@@ -291,10 +291,10 @@ function HomeContent() {
                               : selectedDurations.includes(opt.value)
                           }
                           onChange={() => toggleDuration(opt.value)}
-                          className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600 transition-colors"
+                          className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-600 transition-colors"
                         />
                         <span
-                          className={`text-sm transition-colors duration-200 ${
+                          className={`text-base transition-colors duration-200 ${
                             (opt.value === 'any' && selectedDurations.length === 0) ||
                             selectedDurations.includes(opt.value)
                               ? 'text-blue-600 font-medium'
@@ -357,7 +357,7 @@ function HomeContent() {
             <div className="bg-gray-50 rounded-xl p-6 sm:p-8 border border-gray-200">
               <label
                 htmlFor="destination-select"
-                className="block text-lg font-semibold text-gray-900 mb-4"
+                className="block text-xl font-semibold text-gray-900 mb-4"
               >
                 Where do you want to volunteer?
               </label>
@@ -367,7 +367,7 @@ function HomeContent() {
                 onChange={(e) => {
                   setSelectedDestination(e.target.value)
                 }}
-                className="w-full sm:w-96 px-4 py-3 text-base border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors cursor-pointer"
+                className="w-full sm:w-auto sm:min-w-[28rem] px-5 py-4 text-lg border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors cursor-pointer"
               >
                 <option value="">Select a destination</option>
                 {DESTINATIONS.map((dest) => (
@@ -528,7 +528,7 @@ function ProviderCard({ opportunity, duration }: { opportunity: Opportunity; dur
 
       {/* Action Button */}
       <Link
-        href={`/provider/${provider.slug}`}
+        href={`/provider/${provider.slug}?country=${encodeURIComponent(opportunity.country)}`}
         className="block w-full text-center bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors"
       >
         View Details
@@ -618,41 +618,41 @@ function EmptyState({ destination }: { destination: string }) {
 function WelcomeState() {
   return (
     <div className="text-center py-12">
-      <div className="max-w-2xl mx-auto">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">
+      <div className="max-w-4xl mx-auto">
+        <h3 className="text-2xl font-semibold text-gray-900 mb-6">
           How It Works
         </h3>
-        <div className="grid gap-6 sm:grid-cols-3 text-left">
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mb-4">
+        <div className="grid gap-8 sm:grid-cols-3 text-left">
+          <div className="bg-white p-8 rounded-lg border border-gray-200">
+            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-lg font-bold mb-4">
               1
             </div>
-            <h4 className="font-semibold text-gray-900 mb-2">
+            <h4 className="text-lg font-semibold text-gray-900 mb-2">
               Select Destination
             </h4>
-            <p className="text-sm text-gray-600">
+            <p className="text-base text-gray-600">
               Choose from popular ESL volunteer destinations worldwide.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mb-4">
+          <div className="bg-white p-8 rounded-lg border border-gray-200">
+            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-lg font-bold mb-4">
               2
             </div>
-            <h4 className="font-semibold text-gray-900 mb-2">
+            <h4 className="text-lg font-semibold text-gray-900 mb-2">
               Compare Programs
             </h4>
-            <p className="text-sm text-gray-600">
+            <p className="text-base text-gray-600">
               See advertised costs vs. true estimated costs side by side.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mb-4">
+          <div className="bg-white p-8 rounded-lg border border-gray-200">
+            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-lg font-bold mb-4">
               3
             </div>
-            <h4 className="font-semibold text-gray-900 mb-2">
+            <h4 className="text-lg font-semibold text-gray-900 mb-2">
               Make Informed Choices
             </h4>
-            <p className="text-sm text-gray-600">
+            <p className="text-base text-gray-600">
               Read details about hidden costs and what providers don&apos;t tell you.
             </p>
           </div>

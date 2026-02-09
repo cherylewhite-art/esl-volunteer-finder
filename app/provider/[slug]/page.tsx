@@ -1,14 +1,36 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
+import { useParams, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import { Provider, Opportunity } from '@/types/database.types'
 
 export default function ProviderDetailPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-5xl mx-auto px-4 py-16 text-center">
+          <div className="inline-flex items-center gap-3 text-gray-600">
+            <svg className="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            <span>Loading provider details...</span>
+          </div>
+        </div>
+      </div>
+    }>
+      <ProviderDetailContent />
+    </Suspense>
+  )
+}
+
+function ProviderDetailContent() {
   const params = useParams()
+  const searchParams = useSearchParams()
   const slug = params.slug as string
+  const selectedCountry = searchParams.get('country')
 
   const [provider, setProvider] = useState<Provider | null>(null)
   const [opportunities, setOpportunities] = useState<Opportunity[]>([])
@@ -107,6 +129,12 @@ export default function ProviderDetailPage() {
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
                 {provider.name}
               </h2>
+              {selectedCountry && (
+                <p className="text-lg text-blue-600 font-medium mb-3 flex items-center gap-2">
+                  <LocationIcon />
+                  {selectedCountry}
+                </p>
+              )}
               <div className="flex flex-wrap items-center gap-4 text-gray-600 mb-6">
                 {provider.year_established && (
                   <span className="flex items-center gap-1.5">
@@ -203,7 +231,7 @@ export default function ProviderDetailPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {opportunities.map((opp) => (
-                  <tr key={opp.id} className="hover:bg-gray-50 transition-colors">
+                  <tr key={opp.id} className={`hover:bg-gray-50 transition-colors ${selectedCountry === opp.country ? 'bg-blue-50 ring-1 ring-inset ring-blue-200' : ''}`}>
                     <td className="px-6 py-4">
                       <div className="font-medium text-gray-900">{opp.country}</div>
                       {opp.city && <div className="text-gray-500 text-xs">{opp.city}</div>}
@@ -335,6 +363,15 @@ function ArrowLeftIcon() {
   return (
     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+  )
+}
+
+function LocationIcon() {
+  return (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
   )
 }
