@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo, useCallback, Suspense } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Opportunity } from '@/types/database.types'
@@ -80,6 +80,7 @@ function HomeContent() {
   const router = useRouter()
 
   const [selectedDestination, setSelectedDestination] = useState(searchParams.get('dest') || '')
+  const resultsRef = useRef<HTMLElement>(null)
   const [priceMin, setPriceMin] = useState(Number(searchParams.get('priceMin')) || PRICE_RANGE_MIN)
   const [priceMax, setPriceMax] = useState(Number(searchParams.get('priceMax')) || PRICE_RANGE_MAX)
   const [selectedDurations, setSelectedDurations] = useState<string[]>(() => {
@@ -130,15 +131,7 @@ function HomeContent() {
     router.replace(qs ? `?${qs}` : '/', { scroll: false })
   }, [router])
 
-  useEffect(() => {
-    if (selectedDestination) {
-      fetchOpportunities(selectedDestination)
-    } else {
-      setOpportunities([])
-    }
-  }, [selectedDestination])
-
-  async function fetchOpportunities(country: string) {
+  const fetchOpportunities = useCallback(async (country: string) => {
     setLoading(true)
     setError(null)
 
@@ -158,7 +151,16 @@ function HomeContent() {
       setOpportunities(data || [])
     }
     setLoading(false)
-  }
+  }, [])
+
+  useEffect(() => {
+    if (selectedDestination) {
+      fetchOpportunities(selectedDestination)
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else {
+      setOpportunities([])
+    }
+  }, [selectedDestination, fetchOpportunities])
 
   // Filter and sort
   const filteredOpportunities = useMemo(() => {
@@ -226,7 +228,7 @@ function HomeContent() {
                   <label className="block text-base font-semibold text-gray-900 mb-2">
                     Price Range
                   </label>
-                  <p className="text-base font-medium text-blue-600 mb-3">
+                  <p className="text-base font-semibold text-blue-800 mb-3">
                     ${priceMin.toLocaleString()} &ndash; ${priceMax.toLocaleString()}
                   </p>
                   <div className="relative h-2 mt-4 mb-2">
@@ -234,7 +236,7 @@ function HomeContent() {
                     <div className="absolute inset-0 bg-gray-200 rounded-full" />
                     {/* Active range fill */}
                     <div
-                      className="absolute h-full bg-blue-600 rounded-full transition-all duration-150"
+                      className="absolute h-full bg-blue-800 rounded-full transition-all duration-150"
                       style={{ left: `${sliderFillLeft}%`, width: `${sliderFillWidth}%` }}
                     />
                     {/* Min thumb */}
@@ -291,13 +293,13 @@ function HomeContent() {
                               : selectedDurations.includes(opt.value)
                           }
                           onChange={() => toggleDuration(opt.value)}
-                          className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-600 transition-colors"
+                          className="w-5 h-5 rounded border-gray-300 text-blue-800 focus:ring-blue-800 transition-colors"
                         />
                         <span
                           className={`text-base transition-colors duration-200 ${
                             (opt.value === 'any' && selectedDurations.length === 0) ||
                             selectedDurations.includes(opt.value)
-                              ? 'text-blue-600 font-medium'
+                              ? 'text-blue-800 font-semibold'
                               : 'text-gray-700 group-hover:text-gray-900'
                           }`}
                         >
@@ -314,7 +316,7 @@ function HomeContent() {
                 <div className="mt-4 pt-4 border-t border-gray-200 flex items-center gap-2 flex-wrap transition-all duration-300">
                   <span className="text-xs text-gray-500">Active filters:</span>
                   {(priceMin > PRICE_RANGE_MIN || priceMax < PRICE_RANGE_MAX) && (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium transition-all duration-200">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-900 rounded-full text-xs font-medium transition-all duration-200">
                       ${priceMin.toLocaleString()} &ndash; ${priceMax.toLocaleString()}
                       <button
                         onClick={() => {
@@ -331,7 +333,7 @@ function HomeContent() {
                   {selectedDurations.map((d) => (
                     <span
                       key={d}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium transition-all duration-200"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-900 rounded-full text-xs font-medium transition-all duration-200"
                     >
                       {DURATION_OPTIONS.find((opt) => opt.value === d)?.label}
                       <button
@@ -367,7 +369,7 @@ function HomeContent() {
                 onChange={(e) => {
                   setSelectedDestination(e.target.value)
                 }}
-                className="w-full sm:w-auto sm:min-w-[28rem] px-5 py-4 text-lg border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors cursor-pointer"
+                className="w-full sm:w-auto sm:min-w-[28rem] px-5 py-4 text-lg border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-800 focus:border-blue-800 transition-colors cursor-pointer"
               >
                 <option value="">Select a destination</option>
                 {DESTINATIONS.map((dest) => (
@@ -382,7 +384,7 @@ function HomeContent() {
       </section>
 
       {/* Results Section */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section ref={resultsRef} className="max-w-7xl mx-auto px-4 py-12">
         {loading ? (
           <LoadingState />
         ) : error ? (
@@ -404,7 +406,7 @@ function HomeContent() {
                     id="sort-select"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors cursor-pointer"
+                    className="px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-800 focus:border-blue-800 transition-colors cursor-pointer"
                   >
                     {SORT_OPTIONS.map((opt) => (
                       <option key={opt.value} value={opt.value}>
@@ -435,7 +437,7 @@ function HomeContent() {
                   </p>
                   <button
                     onClick={clearAllFilters}
-                    className="text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
+                    className="text-blue-800 hover:text-blue-900 font-medium text-sm transition-colors"
                   >
                     Clear filters to see all programs
                   </button>
@@ -484,7 +486,7 @@ function ProviderCard({ opportunity, duration }: { opportunity: Opportunity; dur
   const durationLabel = getDurationLabel(duration)
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 hover:border-blue-600 hover:shadow-lg transition-all duration-200">
+    <div className="bg-white rounded-xl border border-gray-200 p-6 hover:border-blue-800 hover:shadow-lg transition-all duration-200">
       {/* Provider Info */}
       <div className="mb-5">
         <h4 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
@@ -517,7 +519,7 @@ function ProviderCard({ opportunity, duration }: { opportunity: Opportunity; dur
 
         <div className="pt-4 border-t border-gray-100">
           <p className="text-sm text-gray-500 mb-1">Estimated Total Cost</p>
-          <p className="text-2xl font-bold text-blue-600">
+          <p className="text-2xl font-bold text-blue-800">
             ${estimatedMin.toLocaleString()} - ${estimatedMax.toLocaleString()}
           </p>
           <p className="text-xs text-gray-500 mt-1">
@@ -529,7 +531,7 @@ function ProviderCard({ opportunity, duration }: { opportunity: Opportunity; dur
       {/* Action Button */}
       <Link
         href={`/provider/${provider.slug}?country=${encodeURIComponent(opportunity.country)}`}
-        className="block w-full text-center bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors"
+        className="block w-full text-center bg-blue-800 text-white py-3 rounded-lg font-bold hover:bg-blue-900 active:bg-blue-950 transition-colors"
       >
         View Details
       </Link>
@@ -566,7 +568,7 @@ function LoadingState() {
     <div className="text-center py-16">
       <div className="inline-flex items-center gap-3 text-gray-600">
         <svg
-          className="animate-spin h-5 w-5 text-blue-600"
+          className="animate-spin h-5 w-5 text-blue-800"
           fill="none"
           viewBox="0 0 24 24"
         >
@@ -624,7 +626,7 @@ function WelcomeState() {
         </h3>
         <div className="grid gap-8 sm:grid-cols-3 text-left">
           <div className="bg-white p-8 rounded-lg border border-gray-200">
-            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-lg font-bold mb-4">
+            <div className="w-12 h-12 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center text-lg font-bold mb-4">
               1
             </div>
             <h4 className="text-lg font-semibold text-gray-900 mb-2">
@@ -635,7 +637,7 @@ function WelcomeState() {
             </p>
           </div>
           <div className="bg-white p-8 rounded-lg border border-gray-200">
-            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-lg font-bold mb-4">
+            <div className="w-12 h-12 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center text-lg font-bold mb-4">
               2
             </div>
             <h4 className="text-lg font-semibold text-gray-900 mb-2">
@@ -646,7 +648,7 @@ function WelcomeState() {
             </p>
           </div>
           <div className="bg-white p-8 rounded-lg border border-gray-200">
-            <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-lg font-bold mb-4">
+            <div className="w-12 h-12 bg-blue-100 text-blue-800 rounded-full flex items-center justify-center text-lg font-bold mb-4">
               3
             </div>
             <h4 className="text-lg font-semibold text-gray-900 mb-2">
