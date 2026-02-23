@@ -12,7 +12,7 @@ const providersData = [
   {
     slug: 'ivhq',
     name: 'International Volunteer HQ (IVHQ)',
-    website_url: 'https://www.volunteerhq.org/',
+    website_url: 'https://www.volunteerhq.com/',
     year_established: 2007,
     registration_fee: 329,
     weekly_fee_1wk: 280,
@@ -123,7 +123,7 @@ const providersData = [
   {
     slug: 'global-volunteers',
     name: 'Global Volunteers',
-    website_url: 'https://www.globalvolunteers.org/',
+    website_url: 'https://www.globalvolunteers.com/',
     year_established: 1984,
     registration_fee: 500,
     weekly_fee_1wk: 950,
@@ -161,7 +161,7 @@ const providersData = [
   {
     slug: 'love-volunteers',
     name: 'Love Volunteers',
-    website_url: 'https://www.lovevolunteers.org/',
+    website_url: 'https://www.lovevolunteers.com/',
     year_established: 2009,
     registration_fee: 279,
     weekly_fee_1wk: 249,
@@ -200,11 +200,11 @@ const providersData = [
 
 const opportunitiesData = [
   // IVHQ Opportunities
-  { provider_slug: 'ivhq', country: 'Costa Rica', city: 'San José', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1200, total_cost_estimate_max: 1800, provider_url: 'https://www.volunteerhq.org/volunteer-in-costa-rica/' },
-  { provider_slug: 'ivhq', country: 'Thailand', city: 'Bangkok', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1100, total_cost_estimate_max: 1600, provider_url: 'https://www.volunteerhq.org/volunteer-in-thailand/' },
-  { provider_slug: 'ivhq', country: 'Peru', city: 'Cusco', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1150, total_cost_estimate_max: 1700, provider_url: 'https://www.volunteerhq.org/volunteer-in-peru/' },
-  { provider_slug: 'ivhq', country: 'Nepal', city: 'Kathmandu', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1000, total_cost_estimate_max: 1500, provider_url: 'https://www.volunteerhq.org/volunteer-in-nepal/' },
-  { provider_slug: 'ivhq', country: 'Ghana', city: 'Accra', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1000, total_cost_estimate_max: 1500, provider_url: 'https://www.volunteerhq.org/volunteer-in-ghana/' },
+  { provider_slug: 'ivhq', country: 'Costa Rica', city: 'San José', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1200, total_cost_estimate_max: 1800, provider_url: 'https://www.volunteerhq.com/volunteer-in-costa-rica/' },
+  { provider_slug: 'ivhq', country: 'Thailand', city: 'Bangkok', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1100, total_cost_estimate_max: 1600, provider_url: 'https://www.volunteerhq.com/volunteer-in-thailand/' },
+  { provider_slug: 'ivhq', country: 'Peru', city: 'Cusco', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1150, total_cost_estimate_max: 1700, provider_url: 'https://www.volunteerhq.com/volunteer-in-peru/' },
+  { provider_slug: 'ivhq', country: 'Nepal', city: 'Kathmandu', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1000, total_cost_estimate_max: 1500, provider_url: 'https://www.volunteerhq.com/volunteer-in-nepal/' },
+  { provider_slug: 'ivhq', country: 'Ghana', city: 'Accra', program_fee_1wk: 280, program_fee_2wk: 480, total_cost_estimate_min: 1000, total_cost_estimate_max: 1500, provider_url: 'https://www.volunteerhq.com/volunteer-in-ghana/' },
   
   // PMGY Opportunities
   { provider_slug: 'pmgy', country: 'Costa Rica', city: 'San José', program_fee_1wk: 189, program_fee_2wk: 329, total_cost_estimate_min: 1050, total_cost_estimate_max: 1600, provider_url: 'https://www.planmygapyear.com/volunteer-in-costa-rica' },
@@ -221,18 +221,18 @@ const opportunitiesData = [
   { provider_slug: 'maximo-nivel', country: 'Ghana', city: 'Accra', program_fee_1wk: 320, program_fee_2wk: 580, total_cost_estimate_min: 1100, total_cost_estimate_max: 1650, provider_url: 'https://www.maximonivel.com/volunteers/' },
   
   // Global Volunteers Opportunities (only operates in Nepal, Peru, and other countries not in our list)
-  { provider_slug: 'global-volunteers', country: 'Costa Rica', city: 'San José', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1850, total_cost_estimate_max: 2600, provider_url: 'https://globalvolunteers.org/' },
-  { provider_slug: 'global-volunteers', country: 'Thailand', city: 'Bangkok', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1750, total_cost_estimate_max: 2450, provider_url: 'https://globalvolunteers.org/' },
-  { provider_slug: 'global-volunteers', country: 'Peru', city: 'Cusco', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1800, total_cost_estimate_max: 2500, provider_url: 'https://globalvolunteers.org/peru/' },
-  { provider_slug: 'global-volunteers', country: 'Nepal', city: 'Kathmandu', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1650, total_cost_estimate_max: 2300, provider_url: 'https://globalvolunteers.org/nepal/' },
-  { provider_slug: 'global-volunteers', country: 'Ghana', city: 'Accra', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1650, total_cost_estimate_max: 2300, provider_url: 'https://globalvolunteers.org/' },
+  { provider_slug: 'global-volunteers', country: 'Costa Rica', city: 'San José', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1850, total_cost_estimate_max: 2600, provider_url: 'https://globalvolunteers.com/' },
+  { provider_slug: 'global-volunteers', country: 'Thailand', city: 'Bangkok', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1750, total_cost_estimate_max: 2450, provider_url: 'https://globalvolunteers.com/' },
+  { provider_slug: 'global-volunteers', country: 'Peru', city: 'Cusco', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1800, total_cost_estimate_max: 2500, provider_url: 'https://globalvolunteers.com/peru/' },
+  { provider_slug: 'global-volunteers', country: 'Nepal', city: 'Kathmandu', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1650, total_cost_estimate_max: 2300, provider_url: 'https://globalvolunteers.com/nepal/' },
+  { provider_slug: 'global-volunteers', country: 'Ghana', city: 'Accra', program_fee_1wk: 950, program_fee_2wk: 1850, total_cost_estimate_min: 1650, total_cost_estimate_max: 2300, provider_url: 'https://globalvolunteers.com/' },
   
   // Love Volunteers Opportunities
-  { provider_slug: 'love-volunteers', country: 'Costa Rica', city: 'San José', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 1150, total_cost_estimate_max: 1750, provider_url: 'https://www.lovevolunteers.org/destinations/volunteer-costa-rica' },
-  { provider_slug: 'love-volunteers', country: 'Thailand', city: 'Bangkok', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 1050, total_cost_estimate_max: 1550, provider_url: 'https://www.lovevolunteers.org/destinations/volunteer-thailand' },
-  { provider_slug: 'love-volunteers', country: 'Peru', city: 'Cusco', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 1100, total_cost_estimate_max: 1650, provider_url: 'https://www.lovevolunteers.org/destinations/volunteer-peru' },
-  { provider_slug: 'love-volunteers', country: 'Nepal', city: 'Kathmandu', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 950, total_cost_estimate_max: 1450, provider_url: 'https://www.lovevolunteers.org/destinations/volunteer-nepal' },
-  { provider_slug: 'love-volunteers', country: 'Ghana', city: 'Accra', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 950, total_cost_estimate_max: 1450, provider_url: 'https://www.lovevolunteers.org/destinations/volunteer-ghana' }
+  { provider_slug: 'love-volunteers', country: 'Costa Rica', city: 'San José', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 1150, total_cost_estimate_max: 1750, provider_url: 'https://www.lovevolunteers.com/destinations/volunteer-costa-rica' },
+  { provider_slug: 'love-volunteers', country: 'Thailand', city: 'Bangkok', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 1050, total_cost_estimate_max: 1550, provider_url: 'https://www.lovevolunteers.com/destinations/volunteer-thailand' },
+  { provider_slug: 'love-volunteers', country: 'Peru', city: 'Cusco', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 1100, total_cost_estimate_max: 1650, provider_url: 'https://www.lovevolunteers.com/destinations/volunteer-peru' },
+  { provider_slug: 'love-volunteers', country: 'Nepal', city: 'Kathmandu', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 950, total_cost_estimate_max: 1450, provider_url: 'https://www.lovevolunteers.com/destinations/volunteer-nepal' },
+  { provider_slug: 'love-volunteers', country: 'Ghana', city: 'Accra', program_fee_1wk: 249, program_fee_2wk: 448, total_cost_estimate_min: 950, total_cost_estimate_max: 1450, provider_url: 'https://www.lovevolunteers.com/destinations/volunteer-ghana' }
 ];
 
 async function seedDatabase() {

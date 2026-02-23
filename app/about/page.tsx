@@ -6,7 +6,7 @@ export default function AboutPage() {
       <div className="max-w-4xl mx-auto px-4">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8 font-medium"
+          className="inline-flex items-center gap-2 text-blue-800 hover:text-blue-900 mb-8 font-medium"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -33,15 +33,15 @@ export default function AboutPage() {
             </h2>
             <ul className="space-y-3 text-gray-700">
               <li className="flex items-start gap-3">
-                <span className="text-blue-600 font-bold flex-shrink-0">•</span>
+                <span className="text-blue-800 font-bold flex-shrink-0">•</span>
                 <span>Compare true total costs (not just advertised program fees)</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-blue-600 font-bold flex-shrink-0">•</span>
+                <span className="text-blue-800 font-bold flex-shrink-0">•</span>
                 <span>Reveal hidden costs providers don't prominently advertise</span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-blue-600 font-bold flex-shrink-0">•</span>
+                <span className="text-blue-800 font-bold flex-shrink-0">•</span>
                 <span>Provide honest information based on reviews and research</span>
               </li>
             </ul>
@@ -106,8 +106,8 @@ export default function AboutPage() {
               For corrections, feedback, or questions:
             </p>
             <a
-              href="mailto:feedback@eslvolunteerfinder.org"
-              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold"
+              href="mailto:feedback@eslvolunteerfinder.com"
+              className="inline-flex items-center gap-2 text-blue-800 hover:text-blue-900 font-semibold"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -117,7 +117,7 @@ export default function AboutPage() {
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                 />
               </svg>
-              feedback@eslvolunteerfinder.org
+              feedback@eslvolunteerfinder.com
             </a>
           </section>
 

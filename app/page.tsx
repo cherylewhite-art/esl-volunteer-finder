@@ -132,6 +132,8 @@ function HomeContent() {
   }, [router])
 
   const fetchOpportunities = useCallback(async (country: string) => {
+    console.log('🔍 Fetching opportunities for:', country)
+    console.log('📊 Supabase client exists:', !!supabase)
     setLoading(true)
     setError(null)
 

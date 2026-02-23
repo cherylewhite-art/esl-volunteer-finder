@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const inter = Inter({
@@ -26,7 +27,7 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto px-4 py-4 sm:py-5">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <Link href="/" className="group">
-                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 group-hover:text-blue-800 transition-colors">
                   ESL Volunteer Finder
                 </h1>
                 <p className="text-xs sm:text-sm text-gray-600">
@@ -36,7 +37,7 @@ export default function RootLayout({
               <nav className="flex items-center gap-4 sm:gap-6">
                 <Link
                   href="/about"
-                  className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                  className="text-sm font-medium text-gray-600 hover:text-blue-800 transition-colors"
                 >
                   About
                 </Link>
@@ -56,12 +57,12 @@ export default function RootLayout({
                 Independent resource. Not affiliated with any volunteer organization.
               </p>
               <div className="flex items-center gap-6">
-                <Link href="/about" className="hover:text-blue-600 transition-colors">
+                <Link href="/about" className="hover:text-blue-800 transition-colors">
                   About
                 </Link>
-                <a
-                  href="mailto:feedback@eslvolunteerfinder.org"
-                  className="hover:text-blue-600 transition-colors"
+                
+                  <a href="mailto:feedback@eslvolunteerfinder.com"
+                  className="hover:text-blue-800 transition-colors"
                 >
                   Contact
                 </a>
@@ -72,6 +73,8 @@ export default function RootLayout({
             </p>
           </div>
         </footer>
+
+        <Analytics />
       </body>
     </html>
   );

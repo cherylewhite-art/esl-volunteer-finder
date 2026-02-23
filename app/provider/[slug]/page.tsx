@@ -12,7 +12,7 @@ export default function ProviderDetailPage() {
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-5xl mx-auto px-4 py-16 text-center">
           <div className="inline-flex items-center gap-3 text-gray-600">
-            <svg className="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
+            <svg className="animate-spin h-5 w-5 text-blue-800" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
             </svg>
@@ -79,7 +79,7 @@ function ProviderDetailContent() {
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-5xl mx-auto px-4 py-16 text-center">
           <div className="inline-flex items-center gap-3 text-gray-600">
-            <svg className="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
+            <svg className="animate-spin h-5 w-5 text-blue-800" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
             </svg>
@@ -94,12 +94,12 @@ function ProviderDetailContent() {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-5xl mx-auto px-4 py-16">
-          <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-8 transition-colors">
+          <Link href="/" className="inline-flex items-center gap-2 text-blue-800 hover:text-blue-900 font-medium mb-8 transition-colors">
             <ArrowLeftIcon /> Back to Search
           </Link>
           <div className="bg-red-50 border border-red-200 rounded-lg p-8 text-center">
             <p className="text-red-700 text-lg">{error || 'Provider not found.'}</p>
-            <Link href="/" className="inline-block mt-4 text-blue-600 hover:text-blue-700 font-medium">
+            <Link href="/" className="inline-block mt-4 text-blue-800 hover:text-blue-900 font-medium">
               Return to homepage
             </Link>
           </div>
@@ -108,6 +108,10 @@ function ProviderDetailContent() {
     )
   }
 
+  const displayOpportunities = selectedCountry
+    ? opportunities.filter(opp => opp.country === selectedCountry)
+    : opportunities
+
   const costBreakdown = getCostBreakdown(provider)
 
   return (
@@ -115,7 +119,7 @@ function ProviderDetailContent() {
       {/* Back Navigation */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-5xl mx-auto px-4 py-4">
-          <Link href="/" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors">
+          <Link href="/" className="inline-flex items-center gap-2 text-blue-800 hover:text-blue-900 font-medium transition-colors">
             <ArrowLeftIcon /> Back to Search
           </Link>
         </div>
@@ -130,7 +134,7 @@ function ProviderDetailContent() {
                 {provider.name}
               </h2>
               {selectedCountry && (
-                <p className="text-lg text-blue-600 font-medium mb-3 flex items-center gap-2">
+                <p className="text-lg text-blue-800 font-medium mb-3 flex items-center gap-2">
                   <LocationIcon />
                   {selectedCountry}
                 </p>
@@ -144,14 +148,14 @@ function ProviderDetailContent() {
                 )}
                 <span className="flex items-center gap-1.5">
                   <GlobeIcon />
-                  {opportunities.length} destination{opportunities.length !== 1 ? 's' : ''}
+                  {displayOpportunities.length} destination{displayOpportunities.length !== 1 ? 's' : ''}
                 </span>
               </div>
               <a
                 href={provider.website_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                className="inline-flex items-center gap-2 text-blue-800 hover:text-blue-900 font-medium transition-colors"
               >
                 Visit Website <ExternalLinkIcon />
               </a>
@@ -172,8 +176,8 @@ function ProviderDetailContent() {
                 </p>
               </div>
               <div className="bg-blue-50 rounded-lg p-4 text-center border border-blue-200 col-span-2">
-                <p className="text-sm text-blue-600 mb-1">Hidden Costs Estimate</p>
-                <p className="text-xl font-bold text-blue-700">
+                <p className="text-sm text-blue-800 mb-1">Hidden Costs Estimate</p>
+                <p className="text-xl font-bold text-blue-900">
                   ${provider.hidden_costs_min?.toLocaleString() ?? '?'} - ${provider.hidden_costs_max?.toLocaleString() ?? '?'}
                 </p>
               </div>
@@ -215,7 +219,7 @@ function ProviderDetailContent() {
       {/* Programs Table */}
       <section className="max-w-5xl mx-auto px-4 py-10">
         <h3 className="text-2xl font-bold text-gray-900 mb-6">
-          Programs & Costs by Destination
+          Programs & Costs{selectedCountry ? ` — ${selectedCountry}` : ' by Destination'}
         </h3>
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
@@ -230,7 +234,7 @@ function ProviderDetailContent() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {opportunities.map((opp) => (
+                {displayOpportunities.map((opp) => (
                   <tr key={opp.id} className={`hover:bg-gray-50 transition-colors ${selectedCountry === opp.country ? 'bg-blue-50 ring-1 ring-inset ring-blue-200' : ''}`}>
                     <td className="px-6 py-4">
                       <div className="font-medium text-gray-900">{opp.country}</div>
@@ -242,7 +246,7 @@ function ProviderDetailContent() {
                     <td className="px-6 py-4 text-right text-gray-700">
                       ${opp.program_fee_2wk?.toLocaleString() ?? 'N/A'}
                     </td>
-                    <td className="px-6 py-4 text-right font-semibold text-blue-600">
+                    <td className="px-6 py-4 text-right font-semibold text-blue-800">
                       ${opp.total_cost_estimate_min?.toLocaleString() ?? '?'} - ${opp.total_cost_estimate_max?.toLocaleString() ?? '?'}
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -251,7 +255,7 @@ function ProviderDetailContent() {
                           href={opp.provider_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-700 font-medium text-xs transition-colors"
+                          className="text-blue-800 hover:text-blue-900 font-medium text-xs transition-colors"
                         >
                           Provider Page
                         </a>
@@ -294,7 +298,7 @@ function ProviderDetailContent() {
           </div>
           <div className="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center">
             <span className="text-base font-semibold text-gray-900">Estimated Total</span>
-            <span className="text-2xl font-bold text-blue-600">
+            <span className="text-2xl font-bold text-blue-800">
               ${costBreakdown.reduce((sum, item) => sum + item.value, 0).toLocaleString()}
             </span>
           </div>
@@ -344,7 +348,7 @@ function getCostBreakdown(provider: Provider) {
   const otherCosts = hiddenMid - flights - visaInsurance
 
   const items = [
-    { label: 'Registration Fee', value: registration, color: 'bg-blue-600', display: `$${registration.toLocaleString()}` },
+    { label: 'Registration Fee', value: registration, color: 'bg-blue-800', display: `$${registration.toLocaleString()}` },
     { label: 'Program Fee (2 weeks)', value: programFee, color: 'bg-blue-400', display: `$${programFee.toLocaleString()}` },
     { label: 'Est. Flights', value: flights, color: 'bg-orange-400', display: `~$${flights.toLocaleString()}` },
     { label: 'Est. Visa & Insurance', value: visaInsurance, color: 'bg-amber-400', display: `~$${visaInsurance.toLocaleString()}` },
