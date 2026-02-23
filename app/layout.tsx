@@ -13,6 +13,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "ESL Volunteer Finder | Compare True Costs",
   description: "Compare true costs of ESL volunteer programs worldwide. Free, independent research revealing hidden fees providers don't advertise.",
+  verification: {
+    google: "okUO_19UHszpuZJp3RGZu4EMzeTu87oVvj8UDfXvk_I",
+  },
 };
 
 export default function RootLayout({
