@@ -72,7 +72,7 @@ export default function RootLayout({
               </div>
             </div>
             <p className="text-xs text-gray-500 mt-6 text-center">
-              Last Updated: January 2026
+              Last Updated: February 2026
             </p>
           </div>
         </footer>
