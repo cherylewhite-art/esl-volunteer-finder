@@ -211,12 +211,12 @@ function HomeContent() {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
+        <div className="max-w-7xl mx-auto px-4 py-2 sm:py-4">
           <div className="text-center max-w-5xl mx-auto">
             <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-6">
               Compare True Costs of ESL Volunteer Programs
             </h2>
-            <p className="text-xl text-gray-600 mb-10">
+            <p className="text-base text-gray-600 mb-6">
               Free, independent research to help you make informed decisions about
               fee-based ESL volunteer programs. We reveal the hidden costs that
               providers don&apos;t advertise upfront.
