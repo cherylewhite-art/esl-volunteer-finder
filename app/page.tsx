@@ -211,7 +211,7 @@ function HomeContent() {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-4 py-8 sm:py-10">
           <div className="text-center max-w-5xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6">
               Compare True Costs of ESL Volunteer Programs
