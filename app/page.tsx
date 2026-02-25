@@ -222,6 +222,30 @@ function HomeContent() {
               providers don&apos;t advertise upfront.
             </p>
 
+            {/* Destination Selector */}
+            <div className="bg-gray-50 rounded-xl p-6 sm:p-8 border border-gray-200">
+              <label
+                htmlFor="destination-select"
+                className="block text-xl font-semibold text-gray-900 mb-4"
+              >
+                Where do you want to volunteer?
+              </label>
+              <select
+                id="destination-select"
+                value={selectedDestination}
+                onChange={(e) => {
+                  setSelectedDestination(e.target.value)
+                }}
+                className="w-full sm:w-auto sm:min-w-[28rem] px-5 py-4 text-lg border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-800 focus:border-blue-800 transition-colors cursor-pointer"
+              >
+                <option value="">Select a destination</option>
+                {DESTINATIONS.map((dest) => (
+                  <option key={dest.value} value={dest.value}>
+                    {dest.label}
+                  </option>
+                ))}
+              </select>
+            </div>
             {/* Filter Controls */}
             <div className="bg-gray-50 rounded-xl p-6 sm:p-8 border border-gray-200 mb-6 transition-all duration-300">
               <div className="flex flex-col md:flex-row gap-6 md:gap-8">
@@ -357,30 +381,6 @@ function HomeContent() {
               )}
             </div>
 
-            {/* Destination Selector */}
-            <div className="bg-gray-50 rounded-xl p-6 sm:p-8 border border-gray-200">
-              <label
-                htmlFor="destination-select"
-                className="block text-xl font-semibold text-gray-900 mb-4"
-              >
-                Where do you want to volunteer?
-              </label>
-              <select
-                id="destination-select"
-                value={selectedDestination}
-                onChange={(e) => {
-                  setSelectedDestination(e.target.value)
-                }}
-                className="w-full sm:w-auto sm:min-w-[28rem] px-5 py-4 text-lg border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-800 focus:border-blue-800 transition-colors cursor-pointer"
-              >
-                <option value="">Select a destination</option>
-                {DESTINATIONS.map((dest) => (
-                  <option key={dest.value} value={dest.value}>
-                    {dest.label}
-                  </option>
-                ))}
-              </select>
-            </div>
           </div>
         </div>
       </section>
