@@ -267,9 +267,12 @@ function ProviderDetailContent() {
             </table>
           </div>
           <div className="bg-gray-50 border-t border-gray-200 px-6 py-3">
-            <p className="text-xs text-gray-500">
-              Estimated totals include registration fee (${provider.registration_fee?.toLocaleString()}), program fee, flights, visa, insurance, and hidden costs.
-            </p>
+           <p className="text-xs text-gray-500">
+  Estimated totals include registration fee (${provider.registration_fee?.toLocaleString()}), program fee, flights, visa, insurance, and hidden costs.
+</p>
+<p className="text-xs text-amber-700 mt-2 font-medium">
+  ⚠ Program fees shown are estimates and may not reflect current pricing. Always verify fees directly on the provider's website before enrolling.
+</p>
           </div>
         </div>
       </section>
