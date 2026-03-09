@@ -113,6 +113,8 @@ function ProviderDetailContent() {
     : opportunities
 
   const costBreakdown = getCostBreakdown(provider)
+  const hasAnyFees = provider.registration_fee != null || provider.weekly_fee_2wk != null
+  const hasHiddenCosts = provider.hidden_costs_min != null || provider.hidden_costs_max != null
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -161,27 +163,35 @@ function ProviderDetailContent() {
               </a>
             </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-gray-50 rounded-lg p-4 text-center border border-gray-200">
-                <p className="text-sm text-gray-500 mb-1">Registration</p>
-                <p className="text-xl font-bold text-gray-900">
-                  ${provider.registration_fee?.toLocaleString() ?? 'N/A'}
-                </p>
+            {/* Quick Stats — only render if there is at least one fee to show */}
+            {(hasAnyFees || hasHiddenCosts) && (
+              <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                {provider.registration_fee != null && (
+                  <div className="bg-gray-50 rounded-lg p-4 text-center border border-gray-200">
+                    <p className="text-sm text-gray-500 mb-1">Registration</p>
+                    <p className="text-xl font-bold text-gray-900">
+                      ${provider.registration_fee.toLocaleString()}
+                    </p>
+                  </div>
+                )}
+                {provider.weekly_fee_2wk != null && (
+                  <div className="bg-gray-50 rounded-lg p-4 text-center border border-gray-200">
+                    <p className="text-sm text-gray-500 mb-1">2-Week Fee</p>
+                    <p className="text-xl font-bold text-gray-900">
+                      ${provider.weekly_fee_2wk.toLocaleString()}
+                    </p>
+                  </div>
+                )}
+                {hasHiddenCosts && (
+                  <div className="bg-blue-50 rounded-lg p-4 text-center border border-blue-200 col-span-2">
+                    <p className="text-sm text-blue-800 mb-1">Hidden Costs Estimate</p>
+                    <p className="text-xl font-bold text-blue-900">
+                      ${provider.hidden_costs_min?.toLocaleString() ?? '?'} - ${provider.hidden_costs_max?.toLocaleString() ?? '?'}
+                    </p>
+                  </div>
+                )}
               </div>
-              <div className="bg-gray-50 rounded-lg p-4 text-center border border-gray-200">
-                <p className="text-sm text-gray-500 mb-1">2-Week Fee</p>
-                <p className="text-xl font-bold text-gray-900">
-                  ${provider.weekly_fee_2wk?.toLocaleString() ?? 'N/A'}
-                </p>
-              </div>
-              <div className="bg-blue-50 rounded-lg p-4 text-center border border-blue-200 col-span-2">
-                <p className="text-sm text-blue-800 mb-1">Hidden Costs Estimate</p>
-                <p className="text-xl font-bold text-blue-900">
-                  ${provider.hidden_costs_min?.toLocaleString() ?? '?'} - ${provider.hidden_costs_max?.toLocaleString() ?? '?'}
-                </p>
-              </div>
-            </div>
+            )}
           </div>
 
           {/* Included / Not Included */}
@@ -268,7 +278,7 @@ function ProviderDetailContent() {
           </div>
           <div className="bg-gray-50 border-t border-gray-200 px-6 py-3">
             <p className="text-xs text-gray-500">
-              Estimated totals include registration fee (${provider.registration_fee?.toLocaleString()}), program fee, flights, visa, insurance, and hidden costs.
+              Estimated totals include registration fee (${provider.registration_fee?.toLocaleString() ?? 'N/A'}), program fee, flights, visa, insurance, and hidden costs.
             </p>
             <p className="text-xs text-amber-700 mt-2 font-medium">
               ⚠ Program fees shown are estimates and may not reflect current pricing. Always verify fees directly on the provider&apos;s website before enrolling.
@@ -277,39 +287,41 @@ function ProviderDetailContent() {
         </div>
       </section>
 
-      {/* Cost Breakdown Chart */}
-      <section className="max-w-5xl mx-auto px-4 pb-10">
-        <h3 className="text-2xl font-bold text-gray-900 mb-6">
-          Cost Breakdown (2-Week Program)
-        </h3>
-        <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
-          <div className="space-y-4">
-            {costBreakdown.map((item) => (
-              <div key={item.label}>
-                <div className="flex justify-between items-center mb-1.5">
-                  <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                  <span className="text-sm font-semibold text-gray-900">{item.display}</span>
+      {/* Cost Breakdown Chart — only show if there are fees to display */}
+      {hasAnyFees && (
+        <section className="max-w-5xl mx-auto px-4 pb-10">
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            Cost Breakdown (2-Week Program)
+          </h3>
+          <div className="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
+            <div className="space-y-4">
+              {costBreakdown.map((item) => (
+                <div key={item.label}>
+                  <div className="flex justify-between items-center mb-1.5">
+                    <span className="text-sm font-medium text-gray-700">{item.label}</span>
+                    <span className="text-sm font-semibold text-gray-900">{item.display}</span>
+                  </div>
+                  <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ${item.color}`}
+                      style={{ width: `${item.percentage}%` }}
+                    />
+                  </div>
                 </div>
-                <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full rounded-full transition-all duration-500 ${item.color}`}
-                    style={{ width: `${item.percentage}%` }}
-                  />
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center">
+              <span className="text-base font-semibold text-gray-900">Estimated Total</span>
+              <span className="text-2xl font-bold text-blue-800">
+                ${costBreakdown.reduce((sum, item) => sum + item.value, 0).toLocaleString()}
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 mt-3">
+              Cost breakdown uses midpoint estimates. Actual costs vary by destination, travel dates, and personal spending.
+            </p>
           </div>
-          <div className="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center">
-            <span className="text-base font-semibold text-gray-900">Estimated Total</span>
-            <span className="text-2xl font-bold text-blue-800">
-              ${costBreakdown.reduce((sum, item) => sum + item.value, 0).toLocaleString()}
-            </span>
-          </div>
-          <p className="text-xs text-gray-500 mt-3">
-            Cost breakdown uses midpoint estimates. Actual costs vary by destination, travel dates, and personal spending.
-          </p>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* What They Don't Tell You */}
       {provider.what_they_dont_tell_you && provider.what_they_dont_tell_you.length > 0 && (
