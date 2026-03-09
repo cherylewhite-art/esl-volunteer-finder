@@ -92,10 +92,8 @@ function HomeContent() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // Primary duration for card display and cost calculations
   const displayDuration = selectedDurations.length > 0 ? selectedDurations[0] : 'any'
 
-  // Duration checkbox toggle handler
   const toggleDuration = useCallback((value: string) => {
     if (value === 'any') {
       setSelectedDurations([])
@@ -108,17 +106,14 @@ function HomeContent() {
     }
   }, [])
 
-  // Clear all filters
   const clearAllFilters = useCallback(() => {
     setPriceMin(PRICE_RANGE_MIN)
     setPriceMax(PRICE_RANGE_MAX)
     setSelectedDurations([])
   }, [])
 
-  // Whether any filters are active
   const hasActiveFilters = priceMin > PRICE_RANGE_MIN || priceMax < PRICE_RANGE_MAX || selectedDurations.length > 0
 
-  // Sync state to URL
   const updateURL = useCallback((dest: string, pMin: number, pMax: number, durations: string[], sort: string) => {
     const params = new URLSearchParams()
     if (dest) params.set('dest', dest)
@@ -132,8 +127,8 @@ function HomeContent() {
   }, [router])
 
   const fetchOpportunities = useCallback(async (country: string) => {
-    console.log('🔍 Fetching opportunities for:', country)
-    console.log('📊 Supabase client exists:', !!supabase)
+    console.log('Fetching opportunities for:', country)
+    console.log('Supabase client exists:', !!supabase)
     setLoading(true)
     setError(null)
 
@@ -164,12 +159,9 @@ function HomeContent() {
     }
   }, [selectedDestination, fetchOpportunities])
 
-  // Filter and sort
   const filteredOpportunities = useMemo(() => {
     let filtered = opportunities.filter(opp => {
-      // Price range filter using adjusted total cost for the display duration
       const { min: costMin, max: costMax } = getAdjustedTotalCost(opp, displayDuration)
-      // Program passes if its cost range overlaps with the selected price range
       if (costMax < priceMin || costMin > priceMax) return false
       return true
     })
@@ -195,7 +187,6 @@ function HomeContent() {
     return filtered
   }, [opportunities, priceMin, priceMax, displayDuration, sortBy])
 
-  // Update URL when filters change (debounced for slider)
   useEffect(() => {
     const timeout = setTimeout(() => {
       updateURL(selectedDestination, priceMin, priceMax, selectedDurations, sortBy)
@@ -203,7 +194,6 @@ function HomeContent() {
     return () => clearTimeout(timeout)
   }, [selectedDestination, priceMin, priceMax, selectedDurations, sortBy, updateURL])
 
-  // Compute slider fill position
   const sliderFillLeft = (priceMin / PRICE_RANGE_MAX) * 100
   const sliderFillWidth = ((priceMax - priceMin) / PRICE_RANGE_MAX) * 100
 
@@ -213,13 +203,14 @@ function HomeContent() {
       <section className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-0 sm:py-2">
           <div className="text-center max-w-5xl mx-auto">
-            <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-6">
-              Compare True Costs of ESL Volunteer Programs
+            <h2 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-3">
+              Before You Pay, Know What You&apos;re Actually Signing Up For.
             </h2>
-            <p className="text-base text-gray-600 mb-6">
-              Free, independent research to help you make informed decisions about
-              fee-based ESL volunteer programs. We reveal the hidden costs that
-              providers don&apos;t advertise upfront.
+            <p className="text-base text-gray-600 mb-2">
+              ESL volunteer programs advertise fees starting at $329 &mdash; but the true cost often exceeds $1,700. We break down what providers don&apos;t tell you upfront.
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              ✓ Independent research &nbsp;&middot;&nbsp; ✓ No affiliate fees &nbsp;&middot;&nbsp; ✓ Based on firsthand volunteer experience
             </p>
 
             {/* Destination Selector */}
@@ -258,14 +249,11 @@ function HomeContent() {
                     ${priceMin.toLocaleString()} &ndash; ${priceMax.toLocaleString()}
                   </p>
                   <div className="relative h-2 mt-4 mb-2">
-                    {/* Track background */}
                     <div className="absolute inset-0 bg-gray-200 rounded-full" />
-                    {/* Active range fill */}
                     <div
                       className="absolute h-full bg-blue-800 rounded-full transition-all duration-150"
                       style={{ left: `${sliderFillLeft}%`, width: `${sliderFillWidth}%` }}
                     />
-                    {/* Min thumb */}
                     <input
                       type="range"
                       min={PRICE_RANGE_MIN}
@@ -279,7 +267,6 @@ function HomeContent() {
                       className="dual-range-thumb"
                       aria-label="Minimum price"
                     />
-                    {/* Max thumb */}
                     <input
                       type="range"
                       min={PRICE_RANGE_MIN}
@@ -465,7 +452,7 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-4 py-16 sm:py-20">
             <div className="text-center max-w-3xl mx-auto">
               <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-6">
-                Compare True Costs of ESL Volunteer Programs
+                Before You Pay, Know What You&apos;re Actually Signing Up For.
               </h2>
             </div>
           </div>

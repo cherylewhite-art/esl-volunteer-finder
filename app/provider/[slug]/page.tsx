@@ -188,7 +188,7 @@ function ProviderDetailContent() {
           <div className="grid sm:grid-cols-2 gap-6 mt-10">
             <div className="bg-green-50 rounded-lg p-6 border border-green-200">
               <h3 className="font-semibold text-green-800 mb-4 flex items-center gap-2">
-                <CheckIcon /> What's Included
+                <CheckIcon /> What&apos;s Included
               </h3>
               <ul className="space-y-2">
                 {provider.what_included?.map((item, i) => (
@@ -267,12 +267,12 @@ function ProviderDetailContent() {
             </table>
           </div>
           <div className="bg-gray-50 border-t border-gray-200 px-6 py-3">
-           <p className="text-xs text-gray-500">
-  Estimated totals include registration fee (${provider.registration_fee?.toLocaleString()}), program fee, flights, visa, insurance, and hidden costs.
-</p>
-<p className="text-xs text-amber-700 mt-2 font-medium">
-  ⚠ Program fees shown are estimates and may not reflect current pricing. Always verify fees directly on the provider's website before enrolling.
-</p>
+            <p className="text-xs text-gray-500">
+              Estimated totals include registration fee (${provider.registration_fee?.toLocaleString()}), program fee, flights, visa, insurance, and hidden costs.
+            </p>
+            <p className="text-xs text-amber-700 mt-2 font-medium">
+              ⚠ Program fees shown are estimates and may not reflect current pricing. Always verify fees directly on the provider&apos;s website before enrolling.
+            </p>
           </div>
         </div>
       </section>
@@ -313,9 +313,9 @@ function ProviderDetailContent() {
 
       {/* What They Don't Tell You */}
       {provider.what_they_dont_tell_you && provider.what_they_dont_tell_you.length > 0 && (
-        <section className="max-w-5xl mx-auto px-4 pb-14">
+        <section className="max-w-5xl mx-auto px-4 pb-10">
           <h3 className="text-2xl font-bold text-gray-900 mb-6">
-            What They Don't Tell You
+            What They Don&apos;t Tell You
           </h3>
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 sm:p-8">
             <p className="text-sm text-amber-800 mb-6">
@@ -334,6 +334,24 @@ function ProviderDetailContent() {
           </div>
         </section>
       )}
+
+      {/* Compare Another Provider CTA */}
+      <section className="max-w-5xl mx-auto px-4 pb-14">
+        <div className="bg-white border border-gray-200 rounded-xl p-6 sm:p-8 text-center">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Not sure this is the right program?
+          </h3>
+          <p className="text-sm text-gray-600 mb-5">
+            Compare costs across all providers before you commit.
+          </p>
+          <Link
+            href="/"
+            className="inline-block bg-blue-800 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-900 transition-colors"
+          >
+            ← Compare All Programs
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }
@@ -345,7 +363,6 @@ function getCostBreakdown(provider: Provider) {
   const hiddenMax = provider.hidden_costs_max ?? 0
   const hiddenMid = Math.round((hiddenMin + hiddenMax) / 2)
 
-  // Estimate flight/visa/insurance components from hidden costs
   const flights = Math.round(hiddenMid * 0.55)
   const visaInsurance = Math.round(hiddenMid * 0.25)
   const otherCosts = hiddenMid - flights - visaInsurance
